@@ -51,20 +51,36 @@
       { width: '100%' }, // to 100%
     ];
 
+    // All Element variable declarations
     const progressBar = document.querySelector('.progressBar');
     const submitBtn = document.querySelector('#SubmitBtn');
     const fileSize = document.querySelector('#FileSize');
     const timerText = document.querySelector('#Timer');
     const connectionText = document.querySelectorAll('.connection-speed');
     const connectionSpeed = 512; // in kbps
-    connectionText.forEach(elem => elem.textContent = connectionSpeed + 'kbps');
+    connectionText.forEach(elem => elem.textContent = connectionSpeed + 'kbps'); // Update Download speed text and connection speed text within DOM
 
-    fileSize.addEventListener('input', e => timerText.textContent = `${(e.target.value * (connectionSpeed * 4)) / 1000}s`);
+    // Change Estimated Download time element text based on value of FileSize input and connection speed
+    fileSize.addEventListener('input', e => timerText.textContent = `${((e.target.value * 1000) / connectionSpeed).toFixed(2)}s`);
 
+    // Click EventListner for Download File Button
     submitBtn.addEventListener('click', () => {
       progressBar.style.width = '0';
       const fileInput = fileSize.value;
-      const timeToComplete = fileInput * (connectionSpeed * 4);
+      const timeToComplete = ((fileInput * 1000) / connectionSpeed).toFixed(2) * 1000; /* Since time for download to complete is based upon 
+      the size of the file (in Megabytes) being downloaded and the download speed of the connection (in Kilobytes)...
+      So since 1 Mb is comprised of 1000 kbs
+      it would take an estimate of 2 seconds to download 1 MB at 512 kbps
+      1) First I convert the megabytes into kilobytes
+        fileInput * 1000
+      2) Next I divide the total file size in kilobytes by the download speec (connection speed)
+        (fileInput * 1000) / connectionSpeed
+      3) I then round this result to 2 decimal places
+        ((fileInput * 1000) / connectionSpeed).toFixed(2)
+      4) Lastly, I multiply the result by 1000 since the animation duration option uses miliseconds
+        ((fileInput * 1000) / connectionSpeed).toFixed(2) * 1000
+      */
+      console.log(timeToComplete);
       progressBar.animate(animProgressLoader, { 
         // timing options
         duration: timeToComplete,
