@@ -4,7 +4,7 @@ A simple progress bar created using HTML, CSS and JavaScript. The progress bar l
 ![ProgressBar Image](screenshot.jpg)
 # [Live Demo Link](https://raw.githack.com/Aaron-RN/JavaScript-ProgressBar/development/index.html)
 
-Uses the animate() method, a built in JavaScript element related function.
+Uses the __animate()__ method, a built in JavaScript element related function.
 ```var animation = element.animate(keyframes, options);```
 
 ### Code Snippet
